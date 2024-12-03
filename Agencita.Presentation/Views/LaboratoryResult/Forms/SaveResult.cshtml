@@ -1,0 +1,21 @@
+﻿@model SaveLaboratoryResultViewModel
+
+<form asp-action="SaveResult" method="post">
+    @if (Model?.Id != 0)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="form-group">
+        <label asp-for="Result" class="control-label"></label>
+        <input asp-for="Result" class="form-control" type="Input" />
+        <span asp-validation-for="Result" class="text-danger"></span>
+    </div>
+    <div class="d-flex justify-content-center mt-4 text-center gap-xl-2">
+     <div class="form-group">
+        <a href="/LaboratoryResult" class="btn btn-secondary">Volver</a>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+    </div>
+</form>

@@ -1,0 +1,35 @@
+﻿@{
+    List<DoctorViewModel> doctors = ViewBag.Doctors as List<DoctorViewModel>;
+}
+<div class="container mt-5">
+    <a href="/Doctor/CreateDoctor" class="btn btn-success mb-3">Crear Doctor</a>
+
+    @{
+        if (doctors!.Count == 0)
+        {
+            <h1>No hay doctores creados</h1>
+            return;
+        }
+    }
+
+    <div class="row">
+        @foreach (var doctor in doctors)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex justify-content-center">
+                <div class="card text-center" style="width: 18rem;">
+                    <img src="@doctor.Picture" class="card-img-top" alt="Profile Picture">
+                    <div class="card-body">
+                        <h5 class="card-title">@doctor.Name @doctor.LastName</h5>
+                        <p class="card-text"><strong>Correo:</strong> @doctor.Email</p>
+                        <p class="card-text"><strong>Teléfono:</strong> @doctor.PhoneNumber</p>
+                        <p class="card-text"><strong>Cédula:</strong> @doctor.Cedula</p>
+                    </div>
+                    <div>
+                        <a href="/Doctor/UpdateDoctor/@doctor.Id" class="btn btn-secondary">Actualizar</a>
+                        <a href="/Doctor/Delete/@doctor.Id" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@using AgendaMedica.Core.Application.ViewModels.User
+@{
+    List<UserViewModel> users = ViewBag.Users as List<UserViewModel>;
+    if(users == null)
+    {
+        users = new();
+    }
+}
+<div class="container">
+    <a href="/Admin/CrearUsuario" class="btn btn-primary">Crear Usuario</a>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Rol</th>
+                </tr>
+            </thead>      
+            <tbody>
+                @{
+                    if (users!.Count() == 0)
+                    {
+                        <h1>No hay Usuarios </h1>
+                        return;
+                    }
+                    foreach (UserViewModel item in users)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.LastName</td>
+                            <td>@item.Email</td>
+                            <td>@item.Username</td>
+                            <td>@{
+                                    if (item.RoleId == 1)
+                                    {
+                                        @:Administrador
+                                    }
+                                    else
+                                    {
+                                        @:Asistente
+                                    }
+                                }</td>
+                            <td>
+                            
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Acciones
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="/Admin/Edit/@item.Id">Actualizar</a></li>
+                                        <li><a class="dropdown-item" href="/Admin/Delete/@item.Id">Eliminar</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

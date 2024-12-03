@@ -1,0 +1,78 @@
+﻿@model SaveAppointmentViewModel
+
+@{
+    bool isValidAppointment = Model.Id != 0;
+    List<PatientViewModel> patients = ViewBag!.Patients as List<PatientViewModel>;
+    List<DoctorViewModel> doctors = ViewBag!.Doctors as List<DoctorViewModel>;
+    ViewData["Title"] = "Crear Cita";
+}
+
+<h2>@(!isValidAppointment ? "Crear" : "Actualizar") Cita</h2>
+
+<form asp-action="@(!isValidAppointment? "CreateAppointment" : "UpdateAppointment")" method="post">
+    @if (ViewBag.id != 0)
+    {
+        <input type="hidden" asp-for="Id" value="@ViewBag.id" />
+    }
+    <div class="form-group">
+        <label asp-for="PatientId" class="control-label"></label>
+        <select asp-for="PatientId" class="form-control">
+          
+
+            @if (patients.Count != 0)
+            {
+                <option>Seleccione un Paciente</option>
+                @foreach (var patient in patients)
+                {
+                    <option value="@patient.Id">@patient.Name</option>
+                }
+            }
+            else
+            {
+                <option>No hay paciente Registrado</option>
+            }
+
+          
+        </select>
+        <span asp-validation-for="PatientId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoctorId" class="control-label"></label>
+        <select asp-for="DoctorId" class="form-control">
+        @if (doctors!.Count != 0)
+        {
+            <option >Seleccione un doctor</option>
+            @foreach (var doctor in doctors)
+            {
+                <option value="@doctor.Id">@doctor.Name</option>
+            }
+        }
+        else
+        {
+            <option>No hay Doctores</option>
+        }
+     
+          
+        </select>
+        <span asp-validation-for="DoctorId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DateAppointment" class="control-label"></label>
+        <input asp-for="DateAppointment" class="form-control" type="datetime-local" />
+        <span asp-validation-for="DateAppointment" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" type="text" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    @if (!isValidAppointment)
+    {
+        <a href="Index" class="btn btn-secondary">Volver</a>
+    }
+    <button type="submit" class="btn btn-primary my-2">@(!isValidAppointment? "Crear" : "Actualizar")</button>
+
+</form>

@@ -1,0 +1,69 @@
+﻿@model SavePatienViewModel
+
+@{
+    ViewData["Title"] = "Formulario de Paciente";
+}
+
+<h2>@(Model.Id == 0 ? "Registrar" : "Actualizar")  Paciente</h2>
+
+<form asp-action="@(Model.Id == 0 ? "CreatePatient" : "UpdatePatient")" method="post" class="form-horizontal" enctype="multipart/form-data">
+    @if (Model?.Id != 0)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Direction" class="control-label"></label>
+        <input asp-for="Direction" class="form-control" />
+        <span asp-validation-for="Direction" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Cedula" class="control-label"></label>
+        <input asp-for="Cedula" class="form-control" />
+        <span asp-validation-for="Cedula" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BirthDate" class="control-label"></label>
+        <input asp-for="BirthDate" class="form-control" type="date" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FormFile" class="control-label"></label>
+        @if (Model?.Id == 0)
+        {
+            <input asp-for="FormFile" class="form-control" type="file" required />
+            <span asp-validation-for="FormFile" class="text-danger"></span>
+        }
+        else
+        {
+            <input asp-for="FormFile" class="form-control" type="file" />
+
+        }
+
+    </div>
+    <div class="form-group form-check">
+        <input asp-for="Smoke" class="form-check-input" />
+        <label asp-for="Smoke" class="form-check-label"></label>
+    </div>
+    <div class="form-group form-check">
+        <input asp-for="Allergy" class="form-check-input" />
+        <label asp-for="Allergy" class="form-check-label"></label>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+</form>

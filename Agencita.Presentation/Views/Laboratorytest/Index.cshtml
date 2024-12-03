@@ -1,0 +1,46 @@
+﻿
+@{
+    List<LaboratoryTestViewModel> testsVm = ViewBag.Tests! as List<LaboratoryTestViewModel>;
+}
+@model IEnumerable<SaveLaboratorySaveViewModel>
+
+@{
+    ViewData["Title"] = "Laboratories";
+}
+
+<h1>Laboratorio Test</h1>
+<a class="btn btn-primary" asp-action="Create">Create Nuevo test</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(testsVm?.Count == 0)
+        {
+            <h2>No hay test registrados</h2>
+            return;
+        }
+        @foreach (var item in testsVm!)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="/LaboratoryTest/Update/@item.Id">Actualizar</a></li>
+                            <li><a class="dropdown-item" href="/LaboratoryTest/Delete/@item.Id">Eliminar</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

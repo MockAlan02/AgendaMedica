@@ -1,0 +1,40 @@
+﻿@model PatientViewModel
+@{
+    List<PatientViewModel> patiens = ViewBag!.Patients! as List<PatientViewModel>;
+}
+<div classaction="container">
+    <a href="/Patient/Create" class="btn btn-success">Crear Paciente</a>
+    @if (patiens!.Count == 0)
+    {
+        <h1>No hay Pacientes Registrados</h1>
+        return;
+    }
+    <div class="row">
+    @foreach(var patient in patiens)
+    {
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="@patient.Picture" class="img-fluid rounded-start" alt="Patient Picture">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@patient.Name @patient.LastName</h5>
+                        <p class="card-text"><strong>Teléfono:</strong> @patient.PhoneNumber</p>
+                        <p class="card-text"><strong>Dirección:</strong> @patient.Direction</p>
+                        <p class="card-text"><strong>Cédula:</strong> @patient.Cedula</p>
+                        <p class="card-text"><strong>Fecha de Nacimiento:</strong> @patient.BirthDate.ToString("dd/MM/yyyy")</p>
+                        <p class="card-text"><strong>Fuma:</strong> @(patient.Smoke ? "Sí" : "No")</p>
+                        <p class="card-text"><strong>Alergia:</strong> @(patient.Allergy ? "Sí" : "No")</p>
+                        <div class="d-flex justify-content-end">
+                            <a href="/Patient/Update/@patient.Id" class="btn btn-primary me-2">Actualizar</a>
+                            <a href="/Patient/Delete/@patient.Id" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+   
+</div>

@@ -1,0 +1,57 @@
+﻿@using AgendaMedica.Core.Application
+@{
+    List<AppointmentViewModel> appoinments = ViewBag.Appointments as List<AppointmentViewModel>;
+}
+<div class="container">
+    <a href="/Appointments/Create" class="btn btn-success">Crear Cita</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (appoinments?.Count == 0)
+            {
+                <h2>No hay Citas Agendadas</h2>
+                return;
+            }
+            @foreach (var appointment in appoinments!)
+            {
+                <tr>
+                    <td>@appointment.PatientName</td>
+                    <td>@appointment.DoctorName</td>
+                    <td>@appointment.DateAppointment.ToShortDateString()</td>
+                    <td>@appointment.DateAppointment.ToShortTimeString()</td>
+                    <td>@appointment.Description</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Acciones
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @if ((int)StatusEnum.pending == appointment.StatusId)
+                                {
+                                    <li><a class="dropdown-item" href="/Appointments/AddTest/@appointment.Id">Consultar</a></li>
+                                }
+                                else if ((int)StatusEnum.PendingResult == appointment.StatusId)
+                                {
+                                    <li><a class="dropdown-item" href="/Appointments/Results/@appointment.Id">Consulta Pendiente</a></li>
+                                }
+                                else
+                                {
+                                    <li><a class="dropdown-item" href="/Appointments/Results/@appointment.Id?btn=true">Resultado</a></li>
+                                }
+                                <li><a class="dropdown-item" href="/Appointments/Delete/@appointment.Id">Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,71 @@
+﻿@model AgendaMedica.Core.Application.ViewModels.LaboratoryResult.TestResult.TestResultVm
+@{
+    List<LaboratoryTestViewModel> tests = ViewBag.Tests as List<LaboratoryTestViewModel>;
+}
+
+<form method="post" asp-action="AddLaboratories">
+    @if (Model?.Id != 0)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="form-group">
+        <label for="testValue">Seleccione un test:</label>
+        <select id="testValue" class="form-control">
+            @if (tests == null || !tests.Any())
+            {
+                <option value="" disabled>No hay tests disponibles</option>
+            }
+            else
+            {
+                <option>Selecciona un test</option>
+                @foreach (var test in tests)
+                {
+                    <option value="@test.Id">@test.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div id="container-test" class="mt-3"></div>
+
+    <div class="mt-3">
+        <button type="button" class="btn btn-secondary" id="Agregartest">Agregar Tests</button>
+    </div>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Finalizar</button>
+    </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#testValue').change(function () {
+            const selectedOption = $(this).find('option:selected');
+            const testId = selectedOption.val();
+            const testName = selectedOption.text();
+
+        });
+
+        $('#Agregartest').click(function () {
+            const selectedOption = $('#testValue option:selected');
+            const testId = selectedOption.val();
+            const testName = selectedOption.text();
+
+            // Verifica si el testId ya está presente en el container-test
+            const exists = $('input[name="TestId"][value="' + testId + '"]').length > 0;
+
+            if (!exists && testId) {
+                const testDiv = `
+                            <div class="test-entry">
+                                <input type="hidden" name="TestId" value="${testId}" />
+                                <input type="text" value="${testName}" disabled class="form-control mt-2" />
+                            </div>
+                        `;
+
+                $('#container-test').append(testDiv);
+            } else if (exists) {
+                alert('El test ya ha sido agregado.');
+            }
+        });
+    });
+</script>

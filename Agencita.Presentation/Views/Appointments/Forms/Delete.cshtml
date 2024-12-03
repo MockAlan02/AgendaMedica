@@ -1,0 +1,18 @@
+﻿<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">¿Estás seguro de eliminar esta cita?</h5>
+                    <p class="card-text">Esta acción no se puede deshacer.</p>
+                    <div class="d-grid gap-2">
+                        <form asp-action="DeleteAppointments" asp-route-id="@ViewBag.id" method="post">
+                            <a href="/Appointments" class="btn btn-primary" type="button">Volver</a>
+                            <button class="btn btn-danger">Confirmar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model AgendaMedica.Core.Application.ViewModels.User.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h2 class="text-center">Iniciar Sesion</h2>
+            @if (!string.IsNullOrEmpty(ViewData.ModelState[string.Empty]?.Errors.FirstOrDefault()?.ErrorMessage))
+            {
+                <div class="text-danger">
+                    @ViewData.ModelState[string.Empty]!.Errors.FirstOrDefault()!.ErrorMessage
+                </div>
+            }
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </div>
+                <div class="form-group">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

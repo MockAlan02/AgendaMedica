@@ -1,0 +1,56 @@
+﻿@model IEnumerable<LaboratoryResultViewModel>
+@{
+    List<LaboratoryResultViewModel> results = ViewBag.Results as List<LaboratoryResultViewModel>;
+}
+
+<script>
+    function searchByCedula() {
+        var cedula = document.getElementById("cedula").value;
+        window.location.href = "/LaboratoryResult/SearchByCedula?cedula=" + cedula;
+        return false; // Evita que el formulario se envíe normalmente
+    }
+</script>
+
+<div class="container">
+    <form onsubmit="return searchByCedula()">
+        <input type="text" id="cedula" name="cedula" placeholder="Ingrese la cédula del paciente" />
+        <button type="submit">Buscar</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre del Paciente</th>
+                <th>Apellido del Paciente</th>
+                <th>Cédula del Paciente</th>
+                <th>Nombre del Test</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (results?.Count == 0)
+            {
+                <tr>
+                    <td colspan="5">No hay resultados creados</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in results!)
+                {
+                    <tr>
+                        <td>@item.PatientName</td>
+                        <td>@item.PatientLastName</td>
+                        <td>@item.PatientCedula</td>
+                        <td>@item.TestName</td>
+                        <td>
+                            <div class="">
+                                <a href="/LaboratoryResult/Update/@item.Id" class="btn btn-secondary">Reportar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

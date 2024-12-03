@@ -1,0 +1,86 @@
+﻿@using AgendaMedica.Core.Application.ViewModels.Role
+@model AgendaMedica.Core.Application.ViewModels.User.Admin.CreateUserViewModel
+
+@{
+    ViewData["Title"] = "CreateUsers";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">@(Model!.Id == 0 ? "Registrar" : "Actualizar") Usuario</h2>
+            <form asp-action=@(Model!.Id == 0 ? "CrearUsuario" : "UpdateUser") method="post" )>
+                @if (Model.Id != 0)
+                {
+                    <input type="hidden" asp-for="Id" />
+                }
+                <div class="form-group">
+                    <label asp-for="Name">Nombre</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName">Apellido</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">Correo</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Username">Nombre de Usuario</label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">Contraseña</label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword">Confirmar Contraseña</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                @if (Model!.Id == 0)
+                {
+                    <div class="form-group">
+                        <label asp-for="RoleId">Role</label>
+                        <select class="form-select" asp-for="RoleId" aria-label="Default select example">
+                            <option selected>Seleccione un rol</option>
+                            @{
+                                foreach (RoleViewModel item in ViewBag.Role)
+                                {
+                                    <option value=@item.Id>@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="RoleId" class="text-danger"></span>
+
+                    </div>
+                }
+                else
+                {
+                    <input class="d-none" asp-for="RoleId" />
+                }
+                <div class="d-flex justify-content-center mt-4 text-center">
+                    @if (Model.Id != 0)
+                    {
+                        <div class="form-group col-4">
+                            <a href="/Admin" class="btn btn-secondary">Volver</a>
+                        </div>
+                    }
+                    <div class="form-group col-4">
+                        <button type="submit" class="btn btn-primary btn-block">@(Model!.Id == 0 ? "Nuevo" : "Actualizar")  Usuario</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
